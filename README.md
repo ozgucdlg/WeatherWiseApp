@@ -91,7 +91,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Screenshots
 
 ### WeatherWise Application Interface
-![WeatherWise Application](docs/screenshots/weatherwise.png)
+![WeatherWise Application](docs/screenshots/sample.png)
 
 ## Contact
 
