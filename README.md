@@ -1,101 +1,76 @@
 # WeatherWise Application
 
-## Overview
-WeatherWise is a Java-based weather information application that provides real-time weather data using the OpenWeatherMap API. The application delivers accurate weather information including temperature, humidity, and weather conditions for any city worldwide.
-
-## Table of Contents
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [API Reference](#api-reference)
-- [Contributing](#contributing)
-- [License](#license)
+A modern and user-friendly weather application built with JavaFX that provides real-time weather information for cities worldwide.
 
 ## Features
-- Real-time weather data retrieval
-- Temperature display in Celsius
-- Humidity percentage information
-- Current weather conditions description
-- Turkish language support for weather descriptions
-- UTF-8 character encoding support
-- Error handling for API requests
 
-## Technologies Used
-- Java 11
-- Maven
-- OpenWeatherMap API
-- org.json Library
-
-## Prerequisites
-Before running the application, ensure you have the following installed:
-- Java Development Kit (JDK) 11 or higher
-- Maven 3.6.x or higher
-- Git (optional, for version control)
+- 🔍 **City Search**: Easily search for any city worldwide
+- 🌡️ **Temperature Data**: View current temperature and "feels like" temperature in Celsius
+- 💧 **Humidity Information**: Check current humidity levels
+- 🌪️ **Wind Speed**: Monitor wind conditions in meters per second
+- ⏲️ **Atmospheric Pressure**: View pressure in hectopascals (hPa)
+- 👁️ **Visibility**: Check visibility conditions in kilometers
+- ☀️ **Sun Timings**: Track sunrise and sunset times
+- 📱 **Modern UI**: Clean and intuitive user interface with emoji indicators
+- ⚡ **Fast Response**: Quick weather data retrieval with caching system
+- 🔄 **Auto-Refresh**: Weather data is cached for 5 minutes for optimal performance
 
 ## Installation
 
-1. Clone the repository:
-```bash
-git clone https://github.com/ozgucdlg/WeatherWiseApp.git
-```
-
-2. Navigate to the project directory:
-```bash
-cd WeatherWiseApp
-```
-
-3. Build the project:
-```bash
-mvn clean install
-```
-
-## Configuration
-The application uses the OpenWeatherMap API. The API key is already configured in the application. However, if you need to use your own API key:
-
-1. Sign up at [OpenWeatherMap](https://openweathermap.org/api)
-2. Get your API key
-3. Replace the API key in `src/main/java/com/weatherwise/WeatherApi.java`
+1. Ensure you have Java 11 or later installed
+2. Clone the repository:
+   ```bash
+   git clone https://github.com/ozgucdlg/WeatherWiseApp.git
+   ```
+3. Navigate to the project directory:
+   ```bash
+   cd WeatherWiseApp
+   ```
+4. Build the project using Maven:
+   ```bash
+   mvn clean install
+   ```
+5. Run the application:
+   ```bash
+   mvn javafx:run
+   ```
 
 ## Usage
-To run the application:
 
-```bash
-mvn exec:java
-```
-
-When prompted:
-1. Enter the name of the city you want to check the weather for
-2. The application will display:
-   - City name
-   - Current temperature in Celsius
+1. Launch the application
+2. Enter a city name in the search field
+3. Click "Show Weather" or press Enter
+4. View detailed weather information including:
+   - Current temperature
+   - Feels like temperature
    - Humidity percentage
-   - Weather description
+   - Wind speed
+   - Atmospheric pressure
+   - Visibility
+   - Sunrise and sunset times
+   - Current weather conditions
 
-Example output:
-```
-Lütfen şehir ismi giriniz:
-Istanbul
-Şehir: Istanbul
-Sıcaklık: 18.5°C
-Nem: 65%
-Hava Durumu: parçalı bulutlu
-```
+## Technology Stack
+
+- Java 11
+- JavaFX for GUI
+- Maven for dependency management
+- OpenWeatherMap API for weather data
+- JSON for data parsing
 
 ## API Reference
-This application uses the OpenWeatherMap API v2.5. For more information about the API:
-- [OpenWeatherMap API Documentation](https://openweathermap.org/current)
-- Base URL: `api.openweathermap.org/data/2.5/weather`
-- Supported Parameters:
-  - `q`: City name
-  - `appid`: API key
-  - `units`: Metric
-  - `lang`: Language (tr for Turkish)
+
+The application uses the OpenWeatherMap API to fetch weather data. The following endpoints are used:
+
+- Current Weather Data: `api.openweathermap.org/data/2.5/weather`
+
+Parameters:
+- `q`: City name
+- `units`: Metric
+- `lang`: en (English)
+- `appid`: Your API key
 
 ## Contributing
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes:
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -104,7 +79,23 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 5. Open a Pull Request
 
 ## License
+
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
----
-Developed by [ozgucdlg](https://github.com/ozgucdlg)
+## Acknowledgments
+
+- Weather data provided by [OpenWeatherMap](https://openweathermap.org/)
+- Icons and emojis for weather representation
+- JavaFX community for GUI components
+
+## Screenshots
+
+```
+[Application screenshots to be added]
+```
+
+## Contact
+
+Özgüç Dalgiç - [@ozgucdlg](https://github.com/ozgucdlg)
+
+Project Link: [https://github.com/ozgucdlg/WeatherWiseApp](https://github.com/ozgucdlg/WeatherWiseApp)

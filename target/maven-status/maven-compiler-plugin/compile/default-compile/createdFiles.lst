@@ -1,2 +1,6 @@
+com\weatherwise\util\WeatherFormatter.class
+com\weatherwise\service\WeatherService.class
 com\weatherwise\Main.class
+com\weatherwise\model\WeatherData.class
+com\weatherwise\WeatherApp.class
 com\weatherwise\WeatherApi.class
