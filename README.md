@@ -90,9 +90,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Screenshots
 
-```
-[Application screenshots to be added]
-```
+### WeatherWise Application Interface
+![WeatherWise Application](docs/screenshots/weatherwise.png)
 
 ## Contact
 
