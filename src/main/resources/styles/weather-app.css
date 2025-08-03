@@ -46,4 +46,37 @@
     -fx-font-weight: bold;
     -fx-text-fill: #2c3e50;
     -fx-padding: 0 0 10px 0;
+}
+
+.subtitle-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #7f8c8d;
+    -fx-padding: 0 0 20px 0;
+}
+
+.requirements-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #95a5a6;
+    -fx-padding: 2px 0;
+}
+
+.error-field {
+    -fx-border-color: #e74c3c;
+    -fx-border-width: 2px;
+}
+
+.success-label {
+    -fx-text-fill: #27ae60;
+    -fx-font-size: 12px;
+}
+
+.error-label {
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 12px;
+}
+
+.user-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3498db;
 } 

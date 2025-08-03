@@ -1,9 +1,24 @@
 # WeatherWise Application
 
-A modern and user-friendly weather application built with JavaFX that provides real-time weather information for cities worldwide.
+A modern and user-friendly weather application built with JavaFX that provides real-time weather information for cities worldwide. **Now with secure user authentication system!**
+
+## 🔐 **NEW: Authentication System**
+
+WeatherWiseApp now features a complete authentication system that allows users to create accounts, sign in securely, and manage their sessions. This transforms the app from a simple weather tool into a personalized weather experience.
+
+### **Authentication Features:**
+- ✅ **User Registration**: Create new accounts with username, email, and secure password
+- ✅ **Secure Login**: Sign in with username/email and password
+- ✅ **Session Management**: Automatic timeout after 30 minutes of inactivity
+- ✅ **Secure Logout**: Properly end sessions and clear user data
+- ✅ **Password Security**: BCrypt hashing for secure password storage
+- ✅ **Input Validation**: Comprehensive validation for all user inputs
+- ✅ **SQLite Database**: Local database for user data persistence
 
 ## Features
 
+- 🔐 **User Authentication**: Secure login and signup system with session management
+- 👤 **User Accounts**: Create and manage personal accounts with secure password storage
 - 🔍 **City Search**: Easily search for any city worldwide
 - 🌡️ **Temperature Data**: View current temperature and "feels like" temperature in Celsius
 - 💧 **Humidity Information**: Check current humidity levels
@@ -14,6 +29,7 @@ A modern and user-friendly weather application built with JavaFX that provides r
 - 📱 **Modern UI**: Clean and intuitive user interface with emoji indicators
 - ⚡ **Fast Response**: Quick weather data retrieval with caching system
 - 🔄 **Auto-Refresh**: Weather data is cached for 5 minutes for optimal performance
+- 🔒 **Session Management**: Automatic session timeout and secure logout functionality
 
 ## Installation
 
@@ -35,9 +51,27 @@ A modern and user-friendly weather application built with JavaFX that provides r
    mvn javafx:run
    ```
 
-## Usage
+## 🚀 **Getting Started**
 
+### **First Time Setup:**
 1. Launch the application
+2. Click **"Create Account"** to register
+3. Fill in your details:
+   - Username (3-20 characters, letters, numbers, underscores)
+   - Email address
+   - Password (8+ characters, must contain letters and numbers)
+   - Confirm password
+4. Click **"Create Account"** to complete registration
+5. You'll be redirected to the login screen
+
+### **Returning Users:**
+1. Launch the application
+2. Enter your username or email
+3. Enter your password
+4. Click **"Sign In"** to access your account
+
+### **Using the Weather App:**
+1. After successful login, you'll see the main weather interface
 2. Enter a city name in the search field
 3. Click "Show Weather" or press Enter
 4. View detailed weather information including:
@@ -49,16 +83,52 @@ A modern and user-friendly weather application built with JavaFX that provides r
    - Visibility
    - Sunrise and sunset times
    - Current weather conditions
+5. Use the **"Logout"** button to securely end your session
 
-## Technology Stack
+### **Account Management Features:**
+- 🔐 **Secure Registration**: Create accounts with validation
+- 🔑 **Flexible Login**: Use username or email to sign in
+- ⏰ **Session Timeout**: Automatic logout after 30 minutes of inactivity
+- 🚪 **Secure Logout**: Properly end sessions and clear data
+- 🛡️ **Password Security**: Industry-standard BCrypt hashing
+- ✅ **Input Validation**: Real-time validation with helpful feedback
 
-- Java 11
-- JavaFX for GUI
-- Maven for dependency management
-- OpenWeatherMap API for weather data
-- JSON for data parsing
+## 🛠️ **Technology Stack**
 
-## API Reference
+### **Core Technologies:**
+- **Java 11** - Main programming language
+- **JavaFX** - Modern GUI framework
+- **Maven** - Dependency management and build tool
+
+### **Weather API:**
+- **OpenWeatherMap API** - Real-time weather data
+
+### **Authentication & Security:**
+- **SQLite** - Local database for user management
+- **BCrypt** - Secure password hashing
+- **Input Validation** - Comprehensive data validation
+- **Session Management** - Secure user sessions
+
+### **Data Processing:**
+- **JSON** - API response parsing
+- **SQL** - Database operations
+
+## 🔒 **Security Features**
+
+### **Authentication Security:**
+- **Password Hashing**: BCrypt algorithm for secure password storage
+- **Input Sanitization**: Protection against injection attacks
+- **Session Management**: Secure session handling with timeout
+- **Data Validation**: Comprehensive input validation
+- **SQL Injection Protection**: Prepared statements for database operations
+
+### **User Data Protection:**
+- **Local Database**: User data stored securely in SQLite
+- **No External Dependencies**: Authentication runs locally
+- **Session Expiration**: Automatic logout for security
+- **Secure Logout**: Complete session cleanup
+
+## 📡 **API Reference**
 
 The application uses the OpenWeatherMap API to fetch weather data. The following endpoints are used:
 
@@ -88,10 +158,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Icons and emojis for weather representation
 - JavaFX community for GUI components
 
-## Screenshots
+## 📸 **Screenshots**
 
-### WeatherWise Application Interface
+### **Authentication Screens:**
+*Coming soon - Login and Signup interface screenshots*
+
+### **Main Application Interface:**
 ![WeatherWise Application](docs/screenshots/sample.png)
+
+### **Key Features Showcase:**
+- 🔐 **Secure Login Screen** - Professional authentication interface
+- 📝 **User Registration** - Comprehensive signup form with validation
+- 🌤️ **Weather Dashboard** - Clean, modern weather display
+- 👤 **User Session** - Personalized experience with logout functionality
 
 ## Contact
 
