@@ -13,7 +13,7 @@ WeatherWiseApp now features a complete authentication system that allows users t
 - ✅ **Secure Logout**: Properly end sessions and clear user data
 - ✅ **Password Security**: BCrypt hashing for secure password storage
 - ✅ **Input Validation**: Comprehensive validation for all user inputs
-- ✅ **SQLite Database**: Local database for user data persistence
+- ✅ **PostgreSQL Database**: Robust database for user data persistence with connection pooling
 
 ## Features
 
@@ -33,23 +33,46 @@ WeatherWiseApp now features a complete authentication system that allows users t
 
 ## Installation
 
-1. Ensure you have Java 11 or later installed
-2. Clone the repository:
+### Prerequisites
+1. **Java 11 or later** installed
+2. **PostgreSQL** database server installed and running
+3. **Maven** for building the project
+
+### Setup Steps
+1. **Install PostgreSQL** (if not already installed):
+   - Windows: Download from https://www.postgresql.org/download/windows/
+   - macOS: `brew install postgresql`
+   - Ubuntu/Debian: `sudo apt-get install postgresql postgresql-contrib`
+
+2. **Set up the database**:
+   ```bash
+   # Run the PostgreSQL setup script
+   psql -U postgres -f postgresql_setup.sql
+   ```
+   
+   For detailed setup instructions, see [POSTGRESQL_SETUP.md](POSTGRESQL_SETUP.md)
+
+3. **Clone the repository**:
    ```bash
    git clone https://github.com/ozgucdlg/WeatherWiseApp.git
    ```
-3. Navigate to the project directory:
+
+4. **Navigate to the project directory**:
    ```bash
    cd WeatherWiseApp
    ```
-4. Build the project using Maven:
+
+5. **Build the project**:
    ```bash
    mvn clean install
    ```
-5. Run the application:
+
+6. **Run the application**:
    ```bash
    mvn javafx:run
    ```
+
+> **Note**: For detailed PostgreSQL setup instructions, see [POSTGRESQL_SETUP.md](POSTGRESQL_SETUP.md)
 
 ## 🚀 **Getting Started**
 
@@ -98,13 +121,15 @@ WeatherWiseApp now features a complete authentication system that allows users t
 ### **Core Technologies:**
 - **Java 11** - Main programming language
 - **JavaFX** - Modern GUI framework
+- **PostgreSQL** - Robust database with connection pooling
+- **HikariCP** - High-performance connection pool
 - **Maven** - Dependency management and build tool
 
 ### **Weather API:**
 - **OpenWeatherMap API** - Real-time weather data
 
 ### **Authentication & Security:**
-- **SQLite** - Local database for user management
+- **PostgreSQL** - Robust database for user management and sessions
 - **BCrypt** - Secure password hashing
 - **Input Validation** - Comprehensive data validation
 - **Session Management** - Secure user sessions
@@ -123,8 +148,8 @@ WeatherWiseApp now features a complete authentication system that allows users t
 - **SQL Injection Protection**: Prepared statements for database operations
 
 ### **User Data Protection:**
-- **Local Database**: User data stored securely in SQLite
-- **No External Dependencies**: Authentication runs locally
+- **PostgreSQL Database**: User data stored securely with connection pooling
+- **Connection Pooling**: HikariCP for optimal database performance
 - **Session Expiration**: Automatic logout for security
 - **Secure Logout**: Complete session cleanup
 

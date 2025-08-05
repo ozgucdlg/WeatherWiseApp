@@ -4,23 +4,35 @@ import com.weatherwise.auth.model.User;
 import com.weatherwise.auth.model.UserSession;
 import com.weatherwise.auth.util.PasswordHasher;
 import com.weatherwise.auth.util.ValidationUtil;
+import com.weatherwise.repository.UserRepository;
+import com.weatherwise.repository.SessionRepository;
+import com.weatherwise.service.DatabaseInitializationService;
 
-import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+/**
+ * Authentication service that handles user authentication and session management.
+ * Follows the Service pattern and uses Repository pattern for data access.
+ */
 public class AuthService {
     private static final Logger LOGGER = Logger.getLogger(AuthService.class.getName());
-    private static final String DB_URL = "jdbc:sqlite:weatherwise_auth.db";
     private static final long SESSION_TIMEOUT_MINUTES = 30;
     
     private final Map<String, UserSession> activeSessions = new HashMap<>();
+    private final UserRepository userRepository;
+    private final SessionRepository sessionRepository;
+    private final DatabaseInitializationService databaseInitService;
     private static AuthService instance;
     
     private AuthService() {
+        this.userRepository = new UserRepository();
+        this.sessionRepository = new SessionRepository();
+        this.databaseInitService = new DatabaseInitializationService();
         initializeDatabase();
     }
     
@@ -188,208 +200,43 @@ public class AuthService {
 
     // Database operations
     private void initializeDatabase() {
-        try (Connection conn = DriverManager.getConnection(DB_URL)) {
-            // Create users table
-            String createUsersTable = 
-                "CREATE TABLE IF NOT EXISTS users (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "username TEXT UNIQUE NOT NULL," +
-                "email TEXT UNIQUE NOT NULL," +
-                "password_hash TEXT NOT NULL," +
-                "created_at TEXT NOT NULL," +
-                "last_login_at TEXT NOT NULL," +
-                "is_active BOOLEAN DEFAULT 1" +
-                ")";
-            
-            // Create sessions table
-            String createSessionsTable = 
-                "CREATE TABLE IF NOT EXISTS sessions (" +
-                "session_id TEXT PRIMARY KEY," +
-                "user_id INTEGER NOT NULL," +
-                "username TEXT NOT NULL," +
-                "created_at TEXT NOT NULL," +
-                "last_activity TEXT NOT NULL," +
-                "is_valid BOOLEAN DEFAULT 1," +
-                "FOREIGN KEY (user_id) REFERENCES users (id)" +
-                ")";
-            
-            try (Statement stmt = conn.createStatement()) {
-                stmt.execute(createUsersTable);
-                stmt.execute(createSessionsTable);
-            }
-            
-            LOGGER.info("Database initialized successfully");
-            
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error initializing database", e);
+        if (!databaseInitService.initializeDatabase()) {
+            LOGGER.severe("Failed to initialize database");
+            throw new RuntimeException("Database initialization failed");
         }
     }
 
     private boolean saveUser(User user) {
-        String sql = "INSERT INTO users (username, email, password_hash, created_at, last_login_at, is_active) VALUES (?, ?, ?, ?, ?, ?)";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setString(1, user.getUsername());
-            pstmt.setString(2, user.getEmail());
-            pstmt.setString(3, user.getPasswordHash());
-            pstmt.setString(4, user.getCreatedAt().toString());
-            pstmt.setString(5, user.getLastLoginAt().toString());
-            pstmt.setBoolean(6, user.isActive());
-            
-            int affected = pstmt.executeUpdate();
-            return affected > 0;
-            
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error saving user", e);
-            return false;
-        }
+        return userRepository.save(user);
     }
 
     private User findUser(String usernameOrEmail) {
-        String sql = "SELECT * FROM users WHERE username = ? OR email = ?";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setString(1, usernameOrEmail);
-            pstmt.setString(2, usernameOrEmail);
-            
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return createUserFromResultSet(rs);
-                }
-            }
-            
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error finding user", e);
-        }
-        
-        return null;
+        Optional<User> user = userRepository.findByUsernameOrEmail(usernameOrEmail);
+        return user.orElse(null);
     }
 
     private User findUserById(int userId) {
-        String sql = "SELECT * FROM users WHERE id = ?";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, userId);
-            
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return createUserFromResultSet(rs);
-                }
-            }
-            
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error finding user by ID", e);
-        }
-        
-        return null;
+        Optional<User> user = userRepository.findById(userId);
+        return user.orElse(null);
     }
 
     private boolean userExists(String username) {
-        String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setString(1, username);
-            
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
-                }
-            }
-            
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error checking if user exists", e);
-        }
-        
-        return false;
+        return userRepository.existsByUsername(username);
     }
 
     private boolean emailExists(String email) {
-        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setString(1, email);
-            
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
-                }
-            }
-            
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error checking if email exists", e);
-        }
-        
-        return false;
+        return userRepository.existsByEmail(email);
     }
 
     private void updateUserLastLogin(User user) {
-        String sql = "UPDATE users SET last_login_at = ? WHERE id = ?";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setString(1, user.getLastLoginAt().toString());
-            pstmt.setInt(2, user.getId());
-            pstmt.executeUpdate();
-            
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error updating user last login", e);
-        }
+        userRepository.updateLastLogin(user.getId(), user.getLastLoginAt());
     }
 
     private void saveSession(UserSession session) {
-        String sql = "INSERT OR REPLACE INTO sessions (session_id, user_id, username, created_at, last_activity, is_valid) VALUES (?, ?, ?, ?, ?, ?)";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setString(1, session.getSessionId());
-            pstmt.setInt(2, session.getUserId());
-            pstmt.setString(3, session.getUsername());
-            pstmt.setString(4, session.getCreatedAt().toString());
-            pstmt.setString(5, session.getLastActivity().toString());
-            pstmt.setBoolean(6, session.isValid());
-            
-            pstmt.executeUpdate();
-            
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error saving session", e);
-        }
+        sessionRepository.save(session);
     }
 
     private void invalidateSession(String sessionId) {
-        String sql = "UPDATE sessions SET is_valid = 0 WHERE session_id = ?";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setString(1, sessionId);
-            pstmt.executeUpdate();
-            
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error invalidating session", e);
-        }
-    }
-
-    private User createUserFromResultSet(ResultSet rs) throws SQLException {
-        return new User(
-            rs.getInt("id"),
-            rs.getString("username"),
-            rs.getString("email"),
-            rs.getString("password_hash"),
-            LocalDateTime.parse(rs.getString("created_at")),
-            LocalDateTime.parse(rs.getString("last_login_at")),
-            rs.getBoolean("is_active")
-        );
+        sessionRepository.invalidateSession(sessionId);
     }
 } 

@@ -1,8 +1,18 @@
 package com.weatherwise.config;
 
 public class AppConfig {
-    // Database configuration
+    // Database configuration - Using SQLite for development
     public static final String DATABASE_URL = "jdbc:sqlite:weatherwise_auth.db";
+    public static final String DATABASE_USERNAME = "";
+    public static final String DATABASE_PASSWORD = "";
+    public static final String DATABASE_DRIVER = "org.sqlite.JDBC";
+    
+    // Connection pool configuration (not used for SQLite)
+    public static final int MAX_POOL_SIZE = 1;
+    public static final int MIN_IDLE_CONNECTIONS = 1;
+    public static final long CONNECTION_TIMEOUT_MS = 30000;
+    public static final long IDLE_TIMEOUT_MS = 600000;
+    public static final long MAX_LIFETIME_MS = 1800000;
     
     // Session configuration
     public static final long SESSION_TIMEOUT_MINUTES = 30;

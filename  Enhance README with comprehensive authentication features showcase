@@ -1,5 +1,0 @@
-[33m5faf882[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Update WeatherWiseApp with latest changes and improvements
-[33ma7c264c[m fix: Update screenshot filename in README
-[33ma02987c[m docs: Add application screenshot
-[33m79cdafd[m docs: Update README with application screenshot
-[33m66b8d10[m feat: Update application to English and enhance UI - Update README with new features and English documentation - Convert all UI text and weather descriptions to English - Add emojis and improve weather data formatting - Update JavaFX styling and layout
